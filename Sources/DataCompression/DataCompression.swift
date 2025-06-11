@@ -492,6 +492,7 @@ fileprivate extension Data
     }
 }
 
+#if canImport(Compression)
 fileprivate extension Data.CompressionAlgorithm
 {
     var lowLevelType: compression_algorithm {
@@ -504,9 +505,7 @@ fileprivate extension Data.CompressionAlgorithm
     }
 }
 
-
 fileprivate typealias Config = (operation: compression_stream_operation, algorithm: compression_algorithm)
-
 
 fileprivate func perform(_ config: Config, source: UnsafePointer<UInt8>, sourceSize: Int, preload: Data = Data()) -> Data?
 {
@@ -563,4 +562,6 @@ fileprivate func perform(_ config: Config, source: UnsafePointer<UInt8>, sourceS
         }
     }
 }
+#endif
+
 #endif
