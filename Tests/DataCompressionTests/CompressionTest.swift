@@ -3,7 +3,6 @@ import XCTest
 
 @testable import DataCompression
 
-
 extension Data
 {
     func deflate_inflate() -> Data? { return c_deflate()?.c_inflate() }
@@ -53,7 +52,7 @@ class CompressionTest: XCTestCase
     {
         super.setUp()
         let b = 1024 * 1024 * 16 // 16 MB
-        let ints = [UInt32](repeating: 0, count: b / 4).map { _ in arc4random() }
+        let ints = (0..<(1 + (b / 4))).map { _ in UInt32.random(in: .min ... .max) }
         self.blob16mb = Data(bytes: ints, count: b)
     }
 
@@ -203,7 +202,7 @@ class CompressionTest: XCTestCase
     func testRandomDataChunks_deflate_inflate()
     {
         for i in 1...500 {
-            let ints = [UInt32](repeating: 0, count: 1 + (i / 4)).map { _ in arc4random() }
+            let ints = (0..<(1 + (i / 4))).map { _ in UInt32.random(in: .min ... .max) }
             let data = Data(bytes: ints, count: i)
             XCTAssertEqual(data, data.deflate_inflate(), "Fails with random data (\(data.count) bytes) :(")
         }
@@ -212,7 +211,7 @@ class CompressionTest: XCTestCase
     func testRandomDataChunks_zip_unzip()
     {
         for i in 1...500 {
-            let ints = [UInt32](repeating: 0, count: 1 + (i / 4)).map { _ in arc4random() }
+            let ints = (0..<(1 + (i / 4))).map { _ in UInt32.random(in: .min ... .max) }
             let data = Data(bytes: ints, count: i)
             XCTAssertEqual(data, data.zip_unzip(), "Fails with random data (\(data.count) bytes) :(")
         }
@@ -221,7 +220,7 @@ class CompressionTest: XCTestCase
     func testRandomDataChunks_gzip_gunzip()
     {
         for i in 1...500 {
-            let ints = [UInt32](repeating: 0, count: 1 + (i / 4)).map { _ in arc4random() }
+            let ints = (0..<(1 + (i / 4))).map { _ in UInt32.random(in: .min ... .max) }
             let data = Data(bytes: ints, count: i)
             XCTAssertEqual(data, data.gzip_gunzip(), "Fails with random data (\(data.count) bytes) :(")
         }
@@ -230,7 +229,7 @@ class CompressionTest: XCTestCase
     func testRandomDataChunks_lz4_delz4()
     {
         for i in 1...500 {
-            let ints = [UInt32](repeating: 0, count: 1 + (i / 4)).map { _ in arc4random() }
+            let ints = (0..<(1 + (i / 4))).map { _ in UInt32.random(in: .min ... .max) }
             let data = Data(bytes: ints, count: i)
             XCTAssertEqual(data, data.lz4_delz4(), "Fails with random data (\(data.count) bytes) :(")
         }
@@ -239,7 +238,7 @@ class CompressionTest: XCTestCase
     func testRandomDataChunks_lzma_delzma()
     {
         for i in 1...500 {
-            let ints = [UInt32](repeating: 0, count: 1 + (i / 4)).map { _ in arc4random() }
+            let ints = (0..<(1 + (i / 4))).map { _ in UInt32.random(in: .min ... .max) }
             let data = Data(bytes: ints, count: i)
             XCTAssertEqual(data, data.lzma_delzma(), "Fails with random data (\(data.count) bytes) :(")
         }
@@ -248,7 +247,7 @@ class CompressionTest: XCTestCase
     func testRandomDataChunks_lzfse_delzfse()
     {
         for i in 1...500 {
-            let ints = [UInt32](repeating: 0, count: 1 + (i / 4)).map { _ in arc4random() }
+            let ints = (0..<(1 + (i / 4))).map { _ in UInt32.random(in: .min ... .max) }
             let data = Data(bytes: ints, count: i)
             XCTAssertEqual(data, data.lzfse_delzfse(), "Fails with random data (\(data.count) bytes) :(")
         }
